@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStroopwafel } from '@fortawesome/free-solid-svg-icons';
+
+import Table from './components/Table';
+import Navbar from './components/Navbar';
+import { getTaskPreBuiltList } from './virtual-persistent-data/data';
+
+const headList = ['Name', 'Status', 'When'];
+
+library.add(faStroopwafel);
+
+class App extends Component {
+  state = {
+    taskList: getTaskPreBuiltList()
+  };
+
+  removeTask = index => {
+    const { taskList } = this.state;
+
+    this.setState({
+      taskList: taskList.filter((task, innerIndex) => innerIndex !== index)
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Navbar />
+        <div className="container">
+          <Table
+            dataList={this.state.taskList}
+            headDataList={headList}
+            removeTask={this.removeTask}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
