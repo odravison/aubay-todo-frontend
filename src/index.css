@@ -1,3 +1,9 @@
+/* Overrides stylesheet userAgent
+================================= */
+body {
+  margin: 0;
+}
+
 /* Buttons
   =============== */
 .button,
