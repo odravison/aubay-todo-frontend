@@ -1,6 +1,10 @@
 const defaultDate = new Date();
 
-const getDateAddedInDays = amount => new Date(defaultDate.getDate() + amount);
+const getDateAddedInDays = amount => {
+  let result = new Date();
+  result.setDate(defaultDate.getDate() + amount);
+  return result;
+}
 
 export const statusList = ['TODO', 'DONE', 'LATE'];
 
