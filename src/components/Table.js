@@ -41,23 +41,24 @@ const HeadTableSimpleComponent = props => {
         <thead>
             <tr>
                 {headRow}
-                <th key="actions"> Actions </th>
+                <th key="actions" className="actions-head"> Actions </th>
             </tr>
         </thead>
     );
 };
 
 const BodyTableSimpleComponent = props => {
+    
     const bodyTable = props.dataBody.map((element, index) => {
         return (
             <tr key={index}>
                 <td>{element.name}</td>
                 <td>{element.status}</td>
                 <td>{element.when}</td>
-                <td>
-                    <RemoveButtonSimpleComponent removeAction={props.removeItem} targetItem={index} />
-                    <EditButtonSimpleComponent editAction={props.editItem} targetItem={index} />
+                <td className="actions-buttons">
                     <DetailButtonSimpleComponent detailAction={props.detailItem} targetItem={index} />
+                    <EditButtonSimpleComponent editAction={props.editItem} targetItem={index} />
+                    <RemoveButtonSimpleComponent removeAction={props.removeItem} targetItem={index} />
                 </td>
             </tr>
         );

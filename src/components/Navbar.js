@@ -5,7 +5,12 @@ class Navbar extends Component {
   render() {
     return (
       <header className="Navbar">
-        <div>logoHere</div>
+        <span className="logo-name">
+          TO-DO App
+        </span>
+        <span className="menu-buttons">
+          <button className="accent-button">New Task</button>
+        </span>
       </header>
     );
   }

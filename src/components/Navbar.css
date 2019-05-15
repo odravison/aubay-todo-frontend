@@ -1,4 +1,59 @@
 .Navbar {
-  background-color: red;
+  background-color: #0366EE;
   height: 40px;
+}
+
+.logo-name {
+  color: #ffffff;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  text-decoration: none;
+  line-height: 1;
+  -webkit-appearance: none;
+  display: inline-block;
+  padding: 0.7em;
+}
+
+.menu-buttons {
+  float: right;
+  margin-top: 5px;
+  margin-right: 20px;
+}
+
+.menu-buttons > a.button,
+button,
+[type=submit],
+[type=reset],
+[type=button] {
+  -webkit-appearance: none;
+  display: inline-block;
+  border-radius: 5px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  padding: .35rem .85rem;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.menu-buttons > button,
+a.button {
+  color: #ffffff;
+  border: 1px solid #30ce7a;
+  background: #30ce7a;
+}
+
+.accent-button:hover,
+.accent-button:active,
+a.accent-button:hover,
+a.accent-button:active {
+  color: #ffffff;
+  border: 1px solid #148046;
+  background: #148046;
 }
