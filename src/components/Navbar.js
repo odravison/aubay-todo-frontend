@@ -1,15 +1,42 @@
 import React, { Component } from 'react';
 import './Navbar.css';
+import CreateUpdateTaskModalForm from './CreateUpdateTaskForm';
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+
+    this.createNewTask = this.props.createNewTask
+
+    this.state = {
+      show: true
+    }
+
+    this.showCreateUpdateModal = () => {
+      this.refs.modal.open();
+    };
+
+    this.hideCreateUpdateModal = () => {
+      this.setState({
+        show: false
+      });
+    };
+
+    this.showCreateUpdateModal = this.showCreateUpdateModal.bind(this);
+    this.hideCreateUpdateModal = this.hideCreateUpdateModal.bind(this);
+
+  }
+
   render() {
     return (
       <header className="Navbar">
         <span className="logo-name">
-          TO-DO App
+          ToDo React App
         </span>
         <span className="menu-buttons">
-          <button className="accent-button">New Task</button>
+          <CreateUpdateTaskModalForm ref = "modal" submitForm={this.createNewTask} />
+          <button className="accent-button" onClick={this.showCreateUpdateModal}>New Task</button>
         </span>
       </header>
     );

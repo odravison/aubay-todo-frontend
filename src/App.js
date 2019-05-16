@@ -6,7 +6,6 @@ import { faStroopwafel, faEdit, faTrashAlt, faEye } from '@fortawesome/free-soli
 import Table from './components/Table';
 import Navbar from './components/Navbar';
 import { getTaskPreBuiltList } from './virtual-persistent-data/data';
-import CreateUpdateTaskForm from './components/CreateUpdateTaskForm';
 
 const headList = ['Name', 'Status', 'When'];
 
@@ -51,7 +50,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar createNewTask={this.addTask} />
         <div className="container striped-table">
           <Table
             dataList={this.state.taskList}
@@ -60,7 +59,6 @@ class App extends Component {
             editTask={this.editTask}
             detailTask={this.detailTask}
           />
-          <CreateUpdateTaskForm submitForm={this.addTask}/>
         </div>
       </div>
     );
