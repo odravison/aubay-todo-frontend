@@ -17,7 +17,7 @@ const StatusOptionsSimpleComponent = props => {
     });
 
     return (
-        <Input type="select" defaultValue={valueItem} onChange={handleSelectItem} name="status" id="selectStatus">
+        <Input style={{width: '47%'}}type="select" defaultValue={valueItem} onChange={handleSelectItem} name="status" id="selectStatus">
             <option value={undefined} >Select initial status</option>;
             {statusOptions}
         </Input>

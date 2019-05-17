@@ -46,11 +46,10 @@ class App extends Component {
       this.getTask = index => {
         return this.state.taskList[index];
       };
-
-      this.detailTask = index => {
-        
-      };
+      
   }
+
+  
 
   render() {
     return (
@@ -61,9 +60,9 @@ class App extends Component {
             dataList={this.state.taskList}
             headDataList={headList}
             removeTask={this.removeTask}
-            getTask={this.getTask}
-            detailTask={this.detailTask}
+            getItem={this.getTask}
             editTask={this.addTask}
+            detailTask={this.detailTask}
           />
         </div>
       </div>
