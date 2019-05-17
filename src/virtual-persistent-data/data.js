@@ -13,18 +13,17 @@ export function getTaskPreBuiltList() {
     {
       name: 'Buy milk',
       description: 'Buy a gallon of milk at near market',
-      when: getDateAddedInDays(1).toJSON(),
+      when: getDateAddedInDays(1),
       status: 'TODO',
-      createdAt: getDateAddedInDays(0).toJSON()
+      createdAt: getDateAddedInDays(0)
     },
 
     {
       name: 'Create a little app',
-      description: `Create a little frontend app to be validated.
-                        The App will be validated by Aubay technical validation guy.`,
-      when: getDateAddedInDays(2).toJSON(),
+      description: `Create a little frontend app to be validated. The App will be validated by Aubay technical validation guy called Samuel.`,
+      when: getDateAddedInDays(2),
       status: 'DONE',
-      createdAt: getDateAddedInDays(0).toJSON()
+      createdAt: getDateAddedInDays(0)
     },
 
     {
@@ -32,17 +31,17 @@ export function getTaskPreBuiltList() {
       description: `Insert the new feature thought on this weekend
             
             The feature consists in create a new status to failed messages`,
-      when: getDateAddedInDays(3).toJSON(),
+      when: getDateAddedInDays(3),
       status: 'TODO',
-      createdAt: getDateAddedInDays(0).toJSON()
+      createdAt: getDateAddedInDays(0)
     },
 
     {
       name: 'Irrigate plants',
       description: `Irrigate my plants`,
-      when: getDateAddedInDays(1).toJSON(),
+      when: getDateAddedInDays(1),
       status: 'TODO',
-      createdAt: getDateAddedInDays(0).toJSON()
+      createdAt: getDateAddedInDays(0)
     }
   ];
 

@@ -40,6 +40,11 @@ class App extends Component {
         this.setState({
           taskList: this.state.taskList.filter((task, innerIndex) => innerIndex !== index)
         });
+
+      };
+
+      this.getTask = index => {
+        return this.state.taskList[index];
       };
 
       this.detailTask = index => {
@@ -56,8 +61,9 @@ class App extends Component {
             dataList={this.state.taskList}
             headDataList={headList}
             removeTask={this.removeTask}
-            editTask={this.editTask}
+            getTask={this.getTask}
             detailTask={this.detailTask}
+            editTask={this.addTask}
           />
         </div>
       </div>

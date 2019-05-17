@@ -17,15 +17,6 @@ class Navbar extends Component {
       this.refs.modal.open();
     };
 
-    this.hideCreateUpdateModal = () => {
-      this.setState({
-        show: false
-      });
-    };
-
-    this.showCreateUpdateModal = this.showCreateUpdateModal.bind(this);
-    this.hideCreateUpdateModal = this.hideCreateUpdateModal.bind(this);
-
   }
 
   render() {

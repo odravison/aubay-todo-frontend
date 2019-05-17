@@ -7,19 +7,21 @@ import { statusList } from '../virtual-persistent-data/data';
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import { DropdownItem, Dropdown, DropdownMenu, DropdownToggle, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 const StatusOptionsSimpleComponent = props => {
+    const { handleSelectItem, valueItem} = props;
     const statusOptions = props.statusList.map((element, index) => {
-        return <DropdownItem key={index}>{element}</DropdownItem>;
+        return <option key={index} value={element} >{element}</option>;
     });
 
     return (
-        <DropdownMenu>
+        <Input type="select" defaultValue={valueItem} onChange={handleSelectItem} name="status" id="selectStatus">
+            <option value={undefined} >Select initial status</option>;
             {statusOptions}
-        </DropdownMenu>
-        
+        </Input>
+
     );
 };
 
@@ -49,32 +51,34 @@ class CreateUpdateTaskModalForm extends Component {
             taskCreatedUpdated = this.state.formFields;
             taskCreatedUpdated[name] = value;
             this.setState({
-                formFields: taskCreatedUpdated,
-                dropdownOpen: this.state.dropdownOpen
+                formFields: taskCreatedUpdated
             });
         }
 
         this.submitForm = () => {
-            const task = this.state.formFields;
-            task.when = task.when.toJSON();
+            if (this.checkAllFields()) {
+                this.props.submitForm(this.state.formFields)
+                this.setState({
+                    isOpen: false,
+                    formFields: this.formFields
+                });
+            } else {
+                this.setState({
+                    submitError: true
+                });
+            }
 
-            this.props.submitForm(this.state.formFields)
-            this.setState({
-                isOpen: false,
-                formFields: this.formFields,
-                dropdownOpen: false
-            });
         }
 
         this.state = {
             isOpen: false,
             formFields: this.formFields,
-            dropdownOpen: false
+            submitError: false
         };
 
         this.close = this.close.bind(this);
         this.open = this.open.bind(this);
-        this.toggleDropDownStatus = this.toggleDropDownStatus.bind(this);
+        this.checkAllFields = this.checkAllFields.bind(this);
     }
 
     close() {
@@ -87,28 +91,45 @@ class CreateUpdateTaskModalForm extends Component {
                 when: '',
                 status: '',
                 createdAt: ''
-            }
+            },
+            submitError: false
         }));
     }
 
-    open() {
-        this.setState({
-            isOpen: true,
-            formFields: {
-                index: '',
-                name: '',
-                description: '',
-                when: '',
-                status: '',
-                createdAt: ''
-            }
-        });
+    checkAllFields() {
+        const { index, name, description, when, status } = this.state.formFields;
+        return (name && description && when && status) || (index && name && description && when && status);
     }
 
-    toggleDropDownStatus() {
-        this.setState(prevState => ({
-          dropdownOpen: !prevState.dropdownOpen
-        }));
+    open(index, getItem) {
+        // console.log(index);
+        // console.log(getItem(index));
+        if (index) {
+            const task = getItem(index);
+            this.setState({
+                isOpen: true,
+                formFields: {
+                    index: index,
+                    name: task.name,
+                    description: task.description,
+                    when: task.when,
+                    status: task.status,
+                    createdAt: task.createdAt
+                }
+            });
+        } else {
+            this.setState({
+                isOpen: true,
+                formFields: {
+                    index: index,
+                    name: '',
+                    description: '',
+                    when: '',
+                    status: '',
+                    createdAt: ''
+                }
+            });
+        }
     }
 
     render() {
@@ -117,6 +138,7 @@ class CreateUpdateTaskModalForm extends Component {
             <div>
                 <Modal isOpen={this.state.isOpen} toggle={this.close}>
                     <ModalHeader toggle={this.close}>Modal title</ModalHeader>
+                    <Alert color="danger" isOpen={this.state.submitError}>All fields must be filled</Alert>
                     <ModalBody>
                         <form>
                             <label>Name</label>
@@ -140,32 +162,21 @@ class CreateUpdateTaskModalForm extends Component {
                                 timeFormat="HH:mm"
                                 timeIntervals={5}
                                 startDate={new Date()}
+                                selected={when}
                                 dateFormat="MMMM d, yyyy h:mm aa"
                                 timeCaption="time"
                             />
 
                             <label>Status</label>
-                            {/* <input
-                                type="text"
-                                name="status"
-                                value={status}
-                                onChange={this.handleInputChange} /> */}
-                            <Dropdown className="dropdown-buttons" isOpen={this.state.dropdownOpen} toggle={this.toggleDropDownStatus}>
-                                <DropdownToggle caret>
-                                    Select status
-                                </DropdownToggle>
-                                
-                                <StatusOptionsSimpleComponent statusList={statusList} />
-
-                            </Dropdown>
+                            <StatusOptionsSimpleComponent valueItem={status} statusList={statusList} handleSelectItem={this.handleInputChange} />
                         </form>
 
 
 
                     </ModalBody>
                     <ModalFooter>
-                        <button className="submmit-button" type="button" onClick={this.submitForm} > submmit </button>
-                        <button color="secondary" onClick={this.close}>Cancel</button>
+                        <button className="submmit-cancel-buttons" type="button" onClick={this.submitForm} >Submmit</button>
+                        <button className="submmit-cancel-buttons" onClick={this.close}>Cancel</button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -174,22 +185,3 @@ class CreateUpdateTaskModalForm extends Component {
 }
 
 export default CreateUpdateTaskModalForm;
-
-// class CreateUpdateTaskModalForm extends Component {
-//     constructor(props) {
-
-
-//     }
-
-//     render() {
-//         const { name, description, when, status } = this.state;
-
-//         return (
-//             <div className="container">
-//             </div>
-
-//         );
-//     }
-// }
-
-// export default CreateUpdateTaskModalForm;

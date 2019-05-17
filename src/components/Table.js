@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment'
 
 import './Table.css';
+import CreateUpdateTaskModalForm from './CreateUpdateTaskForm';
 
 const RemoveButtonSimpleComponent = props => {
     const { removeAction, targetItem } = props;
@@ -13,10 +15,10 @@ const RemoveButtonSimpleComponent = props => {
 };
 
 const EditButtonSimpleComponent = props => {
-    const { editAction, targetItem } = props;
+    const { openEditItemModal, targetItem, getItem } = props;
 
     return (
-        <button onClick={() => { editAction(targetItem); }}>
+        <button onClick={() => { openEditItemModal(targetItem, getItem); }}>
             <FontAwesomeIcon icon="edit" />
         </button>
     );
@@ -48,17 +50,19 @@ const HeadTableSimpleComponent = props => {
 };
 
 const BodyTableSimpleComponent = props => {
-    
+
+    const { openEditItemModal, detailItem, removeItem, getItem } = props;
+
     const bodyTable = props.dataBody.map((element, index) => {
         return (
             <tr key={index}>
                 <td>{element.name}</td>
                 <td>{element.status}</td>
-                <td>{element.when}</td>
+                <td>{moment(element.when).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
                 <td className="actions-buttons">
-                    <DetailButtonSimpleComponent detailAction={props.detailItem} targetItem={index} />
-                    <EditButtonSimpleComponent editAction={props.editItem} targetItem={index} />
-                    <RemoveButtonSimpleComponent removeAction={props.removeItem} targetItem={index} />
+                    <DetailButtonSimpleComponent detailAction={detailItem} targetItem={index} />
+                    <EditButtonSimpleComponent targetItem={index} getItem={getItem} openEditItemModal={openEditItemModal} />
+                    <RemoveButtonSimpleComponent removeAction={removeItem} targetItem={index} />
                 </td>
             </tr>
         );
@@ -69,17 +73,43 @@ const BodyTableSimpleComponent = props => {
 
 class Table extends Component {
 
+    constructor(props) {
+        super(props);
+    
+    
+        this.createNewTask = this.props.createNewTask
+    
+        this.state = {
+          show: true
+        }
+    
+        this.showCreateUpdateModal = (index, getItem) => {
+          this.refs.modal.open(index, getItem);
+        };
+    
+        this.hideCreateUpdateModal = () => {
+          this.setState({
+            show: false
+          });
+        };
+    
+      }
+
     render() {
-        const { dataList, headDataList, removeTask, editTask, detailTask } = this.props;
+        const { dataList, headDataList, removeTask, getTask, detailTask, editTask } = this.props;
         return (
-            <table>
-                <HeadTableSimpleComponent headList={headDataList} />
-                <BodyTableSimpleComponent
-                    dataBody={dataList}
-                    removeItem={removeTask}
-                    editItem={editTask}
-                    detailItem={detailTask} />
-            </table>
+            <div>
+                <table>
+                    <HeadTableSimpleComponent headList={headDataList} />
+                    <BodyTableSimpleComponent
+                        dataBody={dataList}
+                        removeItem={removeTask}
+                        getItem={getTask}
+                        detailItem={detailTask}
+                        openEditItemModal={this.showCreateUpdateModal} />
+                </table>
+                <CreateUpdateTaskModalForm ref="modal" submitForm={editTask} />
+            </div>
         );
     }
 }
