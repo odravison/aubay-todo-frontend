@@ -102,9 +102,14 @@ class CreateUpdateTaskModalForm extends Component {
     }
 
     open(index, getItem) {
-        // console.log(index);
-        // console.log(getItem(index));
-        if (index) {
+
+        // Need to compare like this because in JS, 0 is false
+        // So the code below doesn't work 
+        // if (index){
+        //     ...
+        // }
+
+        if (index !== undefined && index !== null) {
             const task = getItem(index);
             this.setState({
                 isOpen: true,
