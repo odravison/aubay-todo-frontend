@@ -101,7 +101,7 @@ class CreateUpdateTaskModalForm extends Component {
         return (name && description && when && status) || (index && name && description && when && status);
     }
 
-    open(index, getItem) {
+    open(index = undefined, getItem = undefined) {
 
         // Need to compare like this because in JS, 0 is false
         // So the code below doesn't work 
